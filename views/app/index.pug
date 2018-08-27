@@ -2,3 +2,14 @@ extends ../layout
 
 block content
     h3 App
+
+    h3 Choose XML file
+    .row
+        .col-md-6
+            p XML files are uploaded to server and processed with Python
+            form(role='form', enctype='multipart/form-data', method='POST', action='/api/convert')
+                .form-group
+                    label.col-form-label.font-weight-bold File Input
+                    .col-md-6
+                        input(type='file', name='xmlFile')
+                button.btn.btn-primary(type='submit') Submit

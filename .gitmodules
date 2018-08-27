@@ -1,0 +1,3 @@
+[submodule "kassia"]
+	path = kassia
+	url = https://github.com/t-bullock/kassia.git
