@@ -12,6 +12,7 @@ const lusca = require('lusca');
 const dotenv = require('dotenv');
 const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
+const fs = require('fs-extra');
 const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
@@ -20,7 +21,14 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
 
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const upload = multer({ storage: multer.diskStorage({
+  destination: (req, file, callback) => {
+    let user = req.user._id.toString();
+    let uploadPath = path.join(__dirname, 'uploads', user);
+    fs.mkdirsSync(uploadPath);
+    callback(null, uploadPath);
+  }
+}) });
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -34,6 +42,7 @@ const homeController = require('./controllers/home');
 const appController = require('./controllers/app');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
+const userFilesController = require('./controllers/userFiles');
 
 /**
  * API keys and Passport configuration.
@@ -86,7 +95,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload') {
+  if (req.path === '/api/convert') {
     next();
   } else {
     lusca.csrf()(req, res, next);
@@ -123,7 +132,7 @@ app.use('/webfonts', express.static(path.join(__dirname, 'node_modules/@fortawes
  * Primary app routes.
  */
 app.get('/', homeController.index);
-app.get('/app', appController.getApp);
+app.get('/app', passportConfig.isAuthenticated, appController.getApp);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -140,11 +149,16 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 /**
+ * User specific routes
+ */
+app.get('/output/:userid/:filename', passportConfig.isAuthenticated, userFilesController.getConvertedFile);
+
+
+/**
  * API routes.
  */
-app.get('/api', apiController.getApi);
-app.get('/api/upload', apiController.getFileUpload);
-app.post('/api/upload', upload.single('myFile'), apiController.postFileUpload);
+app.post('/api/convert', passportConfig.isAuthenticated, upload.single('xmlFile'), apiController.postConvert);
+
 /**
  * OAuth authentication routes. (Sign in)
  */
