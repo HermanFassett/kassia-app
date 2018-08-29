@@ -9,7 +9,7 @@ const fs = require('fs-extra');
 exports.postConvert = (req, res) => {
   // Call python script on data
   const { spawn } = require('child_process');
-  const scriptPath = path.posix.join(process.cwd(), 'kassia/pdfmaker/kassia.py');
+  const scriptPath = path.posix.join(process.cwd(), 'kassia/kassia.py');
   const inputFile = path.posix.join(process.cwd(), 'uploads', req.user._id.toString(), req.file.filename);
   const outputPath = path.posix.join(process.cwd(), 'output', req.user._id.toString());
 

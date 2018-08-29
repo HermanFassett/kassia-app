@@ -1,1 +1,1 @@
--r kassia/pdfmaker/requirements.txt
+-r kassia/requirements.txt
