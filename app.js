@@ -95,11 +95,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/convert') {
-    next();
-  } else {
-    lusca.csrf()(req, res, next);
-  }
+  lusca.csrf()(req, res, next);
 });
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
@@ -157,7 +153,7 @@ app.get('/output/:userid/:filename', passportConfig.isAuthenticated, userFilesCo
 /**
  * API routes.
  */
-app.post('/api/convert', passportConfig.isAuthenticated, upload.single('xmlFile'), apiController.postConvert);
+app.post('/app/convert', passportConfig.isAuthenticated, apiController.postConvert);
 
 /**
  * OAuth authentication routes. (Sign in)
