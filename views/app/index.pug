@@ -1,12 +1,14 @@
 extends ../layout
 
+block variables
+    - var container_class = 'container-fluid'
 block content
-    h3 App
-
     .row
-        .col-md-6
-            p XML is uploaded to server and processed with Python
-            form(method='POST', action='/app/convert')
+        .col-md-6.score-render
+            form(method='POST', action='/app/convert', target='scoreRender')
                 input(type='hidden', name='_csrf', value=_csrf)
-                textarea.form-control(name='xmlText', placeholder='Enter XML here')
-                button.btn.btn-primary(type='submit') Submit
+                textarea.form-control(name='xmlText', rows='15', placeholder='Enter XML here')
+                button.btn.btn-block.btn-primary(type='submit') Render
+
+        iframe.score-render.col-md-6(name='scoreRender', frameborder='0')
+            h3 Score will render here
