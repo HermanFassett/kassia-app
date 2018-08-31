@@ -3,11 +3,12 @@ extends ../layout
 block variables
     - var container_class = 'container-fluid'
 block content
+    
     .row
         .col-md-6.score-render
-            form(method='POST', action='/app/convert', target='scoreRender')
+            form(id='renderForm', method='POST', action='/app/convert', target='scoreRender')
                 input(type='hidden', name='_csrf', value=_csrf)
-                textarea.form-control(name='xmlText', rows='15', placeholder='Enter XML here')
+                div(id='editor')
                 button.btn.btn-block.btn-primary(type='submit') Render
 
         iframe.score-render.col-md-6(name='scoreRender', frameborder='0')
