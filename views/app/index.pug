@@ -1,15 +1,15 @@
 extends ../layout
 
+block variables
+    - var container_class = 'container-fluid'
 block content
-    h3 App
-
-    h3 Choose XML file
+    
     .row
-        .col-md-6
-            p XML files are uploaded to server and processed with Python
-            form(role='form', enctype='multipart/form-data', method='POST', action='/api/convert')
-                .form-group
-                    label.col-form-label.font-weight-bold File Input
-                    .col-md-6
-                        input(type='file', name='xmlFile')
-                button.btn.btn-primary(type='submit') Submit
+        .col-md-6.score-render
+            form(id='renderForm', method='POST', action='/app/convert', target='scoreRender')
+                input(type='hidden', name='_csrf', value=_csrf)
+                div(id='editor')
+                button.btn.btn-block.btn-primary(type='submit') Render
+
+        iframe.score-render.col-md-6(name='scoreRender', frameborder='0')
+            h3 Score will render here
