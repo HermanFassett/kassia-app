@@ -1,11 +1,14 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import './sample';
+import { sampleXML } from './sample';
 
 $(document).ready(() => {
     const editor = monaco.editor.create(document.getElementById('editor'), {
         language: 'xml',
-        automaticLayout: true
+        automaticLayout: true,
+        value: sampleXML
     });
-  
+    
     $('#renderForm').submit(function() {
         $('[name=xmlText]').remove();
         $(this).append(
