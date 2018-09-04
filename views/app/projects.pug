@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+    
+    .card-deck
+        .card.bg-light.mb-4
+            .card-body
+                h5.card-title Add Project
+                form(id='createForm', method='POST', action='/project')
+                    input(type='hidden', name='_csrf', value=_csrf)
+                    input.form-group.form-control(name='name', placeholder='Project Name')
+                    button.float-right.card-text.btn(type='submit') Add Project
+        each val in projects
+            .w-100.d-none.d-sm-block.d-md-none
+            .w-100.d-none.d-md-block.d-lg-none
+            .card.mb-4
+                iframe.card-img-top(src='/project/' + val._id + '/pdf')
+                .card-body
+                    h5.text-center.card-title
+                        a(href='/project/' + val._id) #{val.name}

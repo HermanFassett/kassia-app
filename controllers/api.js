@@ -7,7 +7,7 @@ const fs = require('fs-extra');
  */
 exports.postConvert = (req, res) => {
   const { spawn } = require('child_process'),
-    project = req.params.project,
+    project = req.params.id,
     filename = project || 'draft',
     scriptPath = path.join(process.cwd(), 'kassia/kassia.py'),
     inputPath = path.join(process.cwd(), 'projects', req.user._id.toString()),

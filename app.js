@@ -42,7 +42,6 @@ const homeController = require('./controllers/home');
 const appController = require('./controllers/app');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
-const userFilesController = require('./controllers/userFiles');
 
 /**
  * API keys and Passport configuration.
@@ -146,7 +145,7 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 /**
  * API/APP routes.
  */
-app.get('/project/:id', passportConfig.isAuthenticated, appController.getApp);
+app.get('/project/:id', passportConfig.isAuthenticated, appController.getProject);
 app.get('/project/:id/pdf', passportConfig.isAuthenticated, appController.getPDF);
 app.post('/project', passportConfig.isAuthenticated, appController.addProject);
 app.post('/convert/:id?', passportConfig.isAuthenticated, apiController.postConvert);

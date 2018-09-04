@@ -5,7 +5,7 @@ const appController = require('./app');
  */
 exports.index = (req, res) => {
   if (req.isAuthenticated()) {
-    appController.getApp(req, res);
+    return appController.getProjects(req, res);
   } else {
     res.render('home', {
       title: 'Home'

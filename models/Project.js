@@ -5,6 +5,6 @@ const projectSchema = new mongoose.Schema({
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
-const Project = mongoose.model('Project'. projectSchema);
+const Project = mongoose.model('Project', projectSchema);
 
 module.exports = Project;

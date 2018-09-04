@@ -18,6 +18,15 @@ $(document).ready(() => {
                 value: editor.getValue() 
             })
         );
+
+        // Add simple rendering message in iframe render
+        const iframe = $('[name=scoreRender]');
+        iframe.contents().find('body').html(`
+            <div style="background:white;height:100%">
+                <h4 style="text-align:center">
+                    Rendering...
+                </h4>
+            </div>`);
     });
     
     let setHeight = () => {

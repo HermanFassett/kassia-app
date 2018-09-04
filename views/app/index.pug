@@ -7,7 +7,7 @@ block content
         projectXML = "#{xml}";
     .row
         .col-md-6.score-render
-            form(id='renderForm', method='POST', action='/convert', target='scoreRender')
+            form(id='renderForm', method='POST', action='/convert/' + (id || ''), target='scoreRender')
                 input(type='hidden', name='_csrf', value=_csrf)
                 div(id='editor')
                 button.btn.btn-block.btn-primary(type='submit') Render
