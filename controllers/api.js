@@ -1,7 +1,5 @@
-const request = require('request');
 const path = require('path');
 const fs = require('fs-extra');
-const crypto = require('crypto');
 
 /**
  * POST /api/convert
@@ -9,11 +7,12 @@ const crypto = require('crypto');
  */
 exports.postConvert = (req, res) => {
   const { spawn } = require('child_process'),
-    filename = crypto.randomBytes(16).toString('hex'),
+    project = req.params.project,
+    filename = project || 'draft',
     scriptPath = path.join(process.cwd(), 'kassia/kassia.py'),
-    inputPath = path.join(process.cwd(), 'uploads', req.user._id.toString()),
+    inputPath = path.join(process.cwd(), 'projects', req.user._id.toString()),
     inputFile = path.join(inputPath, filename),
-    outputPath = path.join(process.cwd(), 'output', req.user._id.toString());
+    outputPath = path.join(process.cwd(), 'projects',  req.user._id.toString());
 
   // Ensure directories exist
   fs.mkdirsSync(outputPath);
@@ -32,6 +31,6 @@ exports.postConvert = (req, res) => {
 
   // Redirect on script completion
   pyScript.stdout.on('end', function() {
-    res.redirect(`/output/${req.user._id.toString()}/${filename}`);
+    res.redirect(`/project/${filename}/pdf`);
   });
 }

@@ -3,13 +3,16 @@ extends ../layout
 block variables
     - var container_class = 'container-fluid'
 block content
-    
+    script.
+        projectXML = "#{xml}";
     .row
         .col-md-6.score-render
-            form(id='renderForm', method='POST', action='/app/convert', target='scoreRender')
+            form(id='renderForm', method='POST', action='/convert', target='scoreRender')
                 input(type='hidden', name='_csrf', value=_csrf)
                 div(id='editor')
                 button.btn.btn-block.btn-primary(type='submit') Render
 
-        iframe.score-render.col-md-6(name='scoreRender', frameborder='0')
-            h3 Score will render here
+        if (pdf)
+            iframe.score-render.col-md-6(name='scoreRender', frameborder='0', src=pdf)
+        else 
+            iframe.score-render.col-md-6(name='scoreRender', frameborder='0')

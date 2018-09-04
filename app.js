@@ -39,6 +39,7 @@ dotenv.load({ path: '.env' });
  * Controllers (route handlers).
  */
 const homeController = require('./controllers/home');
+const appController = require('./controllers/app');
 const userController = require('./controllers/user');
 const apiController = require('./controllers/api');
 const userFilesController = require('./controllers/userFiles');
@@ -143,15 +144,12 @@ app.post('/account/delete', passportConfig.isAuthenticated, userController.postD
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
 /**
- * User specific routes
+ * API/APP routes.
  */
-app.get('/output/:userid/:filename', passportConfig.isAuthenticated, userFilesController.getConvertedFile);
-
-
-/**
- * API routes.
- */
-app.post('/app/convert', passportConfig.isAuthenticated, apiController.postConvert);
+app.get('/project/:id', passportConfig.isAuthenticated, appController.getApp);
+app.get('/project/:id/pdf', passportConfig.isAuthenticated, appController.getPDF);
+app.post('/project', passportConfig.isAuthenticated, appController.addProject);
+app.post('/convert/:id?', passportConfig.isAuthenticated, apiController.postConvert);
 
 /**
  * OAuth authentication routes. (Sign in)

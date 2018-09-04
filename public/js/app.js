@@ -6,7 +6,7 @@ $(document).ready(() => {
     const editor = monaco.editor.create(document.getElementById('editor'), {
         language: 'xml',
         automaticLayout: true,
-        value: sampleXML
+        value: projectXML ? decodeURIComponent(projectXML) : sampleXML
     });
     
     $('#renderForm').submit(function() {
